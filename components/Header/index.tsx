@@ -1,11 +1,11 @@
-import Link from 'next/link'
 import React from 'react'
-import logo from 'images/logo.png'
+import Link from 'next/link'
 import Image from 'next/image'
+import logo from 'images/logo.png'
 
 const Header = () => {
   return (
-    <header className='flex justify-between p-5 max-w-7xl mx-auto'>
+    <header className='flex justify-between p-5'>
       <div className='flex items-center space-x-5'>
         <Link href="/">
           <div className='w-44 object-contain cursor-pointer'>
