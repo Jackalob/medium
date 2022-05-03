@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GetStaticProps } from 'next'
 import PortableText from 'react-portable-text'
 import { sanityClient, urlFor } from 'sanity'
@@ -18,17 +18,17 @@ interface Props {
 }
 
 const Post = ({ post }: Props) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<Form>()
+  const { register, handleSubmit, reset ,formState: { errors } } = useForm<Form>()
   const onSubmit: SubmitHandler<Form> = async (data) => {
-    console.log(data)
-    // await fetch('/api/createComment', {
-    //   method: 'POST',
-    //   body: JSON.stringify(data)
-    // }).then(() => {
-    //   console.log(data)
-    // }).catch((err) => {
-    //   console.log(err)
-    // })
+    await fetch('/api/createComment', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }).then(() => {
+      console.log(data)
+      reset();
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
@@ -89,7 +89,7 @@ const Post = ({ post }: Props) => {
           <input
             {...register('name', { required: true })}
             className='shadow border rounded py-2 px-3 mt-1 block w-full outline-none focus:ring ring-yellow-500'
-            placeholder="ttt"
+            placeholder="Eren Yeager"
             type="text"
           />
         </label>
@@ -98,7 +98,7 @@ const Post = ({ post }: Props) => {
           <input
             {...register('email', { required: true })}
             className='shadow border rounded py-2 px-3 mt-1 block w-full outline-none focus:ring ring-yellow-500'
-            placeholder="ttt"
+            placeholder="erenyeager1000@gmail.com"
             type="text"
           />
         </label>
@@ -107,7 +107,7 @@ const Post = ({ post }: Props) => {
           <textarea
             {...register('comment', { required: true })}
             className='shadow border rounded py-2 px-3 mt-1 block w-full outline-none focus:ring ring-yellow-500'
-            placeholder="ttt"
+            placeholder="content"
             rows={8}
           />
         </label>
