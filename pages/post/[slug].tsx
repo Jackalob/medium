@@ -18,6 +18,7 @@ interface Props {
 }
 
 const Post = ({ post }: Props) => {
+  const [submitted, setSubmitted] = useState(false)
   const { register, handleSubmit, reset ,formState: { errors } } = useForm<Form>()
   const onSubmit: SubmitHandler<Form> = async (data) => {
     await fetch('/api/createComment', {
@@ -25,9 +26,11 @@ const Post = ({ post }: Props) => {
       body: JSON.stringify(data)
     }).then(() => {
       console.log(data)
+      setSubmitted(true)
       reset();
     }).catch((err) => {
       console.log(err)
+      setSubmitted(false)
     })
   }
 
@@ -72,6 +75,15 @@ const Post = ({ post }: Props) => {
       </article>
 
       <hr className="max-w-lg my-5  mx-auto border border-yellow-500"/>
+      
+      { submitted && (
+        <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
+          <h3 className="text-3xl font-bold">
+            Thank you for submitting your comment!
+          </h3>
+          <p>Once it has been approved, it will appear below!</p>
+        </div>
+      )}
 
       <form className='flex flex-col p-5 max-w-2xl mx-auto mb-10' onSubmit={handleSubmit(onSubmit)}>
         <h3 className='text-sm text-yellow-500'>Enjoyed this article?</h3>
